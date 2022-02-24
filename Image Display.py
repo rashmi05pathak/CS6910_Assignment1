@@ -1,15 +1,14 @@
 # getting one sample image from each class and visualizing 
-fig = pyplot.figure(figsize=(10, 7))
-# setting values to rows and column variables
-rows = 2
-columns = 5
-for i in range(10):
-	# Adds a subplot at the 2nd position
-    fig.add_subplot(rows, columns, i+1)
-    j = list_of_index.get(i)
-    # showing image
-    pyplot.imshow(trainX[j])
-    pyplot.axis('off')
-    pyplot.title("class"+ str(i))
-# show the figure
-pyplot.show()
+(trainx, trainy), (testx, testy)= fashion_mnist.load_data()
+classes = np.unique(trainy)
+index_mat = [0]*10
+for i in classes:
+  index_mat[i] = trainy.tolist().index(i)
+
+plt.figure(figsize=(10,10))
+
+for j, i in enumerate(index_mat):
+  plt.subplot(3,4,j+1)
+  plt.imshow(trainx[i], cmap=plt.get_cmap('gray'))
+  
+plt.show()
