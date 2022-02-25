@@ -1,0 +1,8 @@
+!pip install scikitplot
+
+import scikitplot as skplt
+
+test_acc,test_pred=test_model()
+ytest_pred=[class_names[k] for k in test_pred]
+ytest=[class_names[k]  for k in y_test]
+confusion_mat=skplt.metrics.plot_confusion_matrix(ytest,ytest_pred,figsize=(10,10))
