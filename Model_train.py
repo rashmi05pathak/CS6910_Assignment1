@@ -59,6 +59,37 @@ def Model_train():            #define inputs
   output = softmax 
   activation = activ
   
+  #Backward propogation
+def backward_propogation(w, b, x, y):
+    grad_A = {}
+    grad_W = {}
+    grad_b = {}
+    grad_H = {}  
+
+    num_weight_mat = len(w)
+    num_hidden_layers = num_weight_mat-1
+
+    y_hat, A, H = forward_propogation(w, b, x)
+
+    grad_A['A%s'% (num_hidden_layers+1)] = -(y-y_hat)  #cross entropy loss
+    
+    for i in range(num_hidden_layers+1, 1, -1):
+      
+      grad_W['W%s'%i] = np.matmul(grad_A['A%s'%i].reshape(-1,1), H['H%s'%(i-1)].reshape(1,-1))
+
+      grad_b['b%s'%i] = grad_A['A%s'%i]
+
+      grad_H['H%s'%(i-1)] = np.dot(np.transpose(w['W%s'%i]), grad_A['A%s'%i]) 
+
+      grad_A['A%s'%(i-1)] = np.multiply(grad_H['H%s'%(i-1)], der_activ(A['A%s'%(i-1)]))
+
+    grad_W['W1'] = np.multiply(grad_A['A1'].reshape(-1,1), H['H0'].reshape(1,-1))
+
+    grad_b['b1'] = grad_A['A1']
+
+    return grad_W, grad_b
+  
+  
    #defining function for sgd optimizer
   def sgd():
 
