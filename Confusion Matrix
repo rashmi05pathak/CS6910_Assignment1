@@ -1,8 +1,27 @@
 !pip install scikitplot
+!pip install wandb
 
 import scikitplot as skplt
+
+config_defaults = {
+        'epochs': 10,
+        'batch_size':32,
+        'hidden_layers':3,
+        'eta': 0.001,
+        'size':32,
+        'activation': 'sigmoid',    
+        'optimizer': 'rmsprop',      
+        'wt_decay':0.05,
+        'wt_init':'xavier'
+        }
 
 test_acc,test_pred=test_model()
 ytest_pred=[class_names[k] for k in test_pred]
 ytest=[class_names[k]  for k in y_test]
 confusion_mat=skplt.metrics.plot_confusion_matrix(ytest,ytest_pred,figsize=(10,10))
+
+wandb.log({"conf_mat" : wandb.plot.confusion_matrix(probs=None,
+                            preds=ytest_pred, y_true=ytest)})
+wandb.init(project ='conf_mat',config=config_defaults, magic=True,reinit = True)
+
+wandb.run.finish()
