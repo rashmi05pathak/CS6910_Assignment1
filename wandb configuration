@@ -1,0 +1,79 @@
+!pip install wandb
+import wandb
+wandb.init(project='ed20s051_ed21s007', entity='Assignment 1')
+
+sweep_config = {
+  'name': 'sweep1',  
+  'method': 'grid',
+  'parameters': {
+        'epochs': {
+            'values': [5,10]
+        },
+        'batch_size':{
+            'values':[16,32,64]
+        },
+        'hidden_layers':{
+            'values':[3,4,5]
+        },
+        'eta': {
+            'values': [0.005,0.001]
+        },
+        'size':{
+            'values':[32,64]
+        },
+        'optimizer': {
+            'values': ['adam','rmsprop','nesterov','momentum_gd','sgd']
+        },
+        'activation': {
+            'values': ['sigmoid','tanh','relu']
+        },
+        'wt_decay': {
+            'values': [0,0.005,0.05]
+        },
+        'wt_init':{
+            'values':['xavier','random']
+        }
+    }
+}
+
+
+
+
+
+
+sweep_config = {
+  'name': 'sweep2',  
+  'method': 'bayes',
+  'parameters': {
+        'epochs': {
+            'values': [5,10]
+        },
+        'batch_size':{
+            'values':[16,32,64]
+        },
+        'hidden_layers':{
+            'values':[3,4,5]
+        },
+        'eta': {
+            'values': [0.005,0.001]
+        },
+        'size':{
+            'values':[32,64]
+        },
+        'optimizer': {
+            'values': ['adam','rmsprop','nesterov','momentum_gd','sgd']
+        },
+        'activation': {
+            'values': ['sigmoid','tanh','relu']
+        },
+        'wt_decay': {
+            'values': [0,0.005,0.05]
+        },
+        'wt_init':{
+            'values':['xavier','random']
+        }
+    }
+}
+
+
+wandb.finish()
